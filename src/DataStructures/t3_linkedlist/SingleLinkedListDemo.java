@@ -19,17 +19,18 @@ public class SingleLinkedListDemo {
         SingleLinkedList singleLinkedList = new SingleLinkedList();
 
         //加入
-//        singleLinkedList.add(hero1);
-//        singleLinkedList.add(hero4);
-//        singleLinkedList.add(hero2);
-//        singleLinkedList.add(hero3);
+        singleLinkedList.add(hero1);
+        singleLinkedList.add(hero4);
+        singleLinkedList.add(hero2);
+        singleLinkedList.add(hero3);
 
         //按顺序添加
-        singleLinkedList.addByOrder(hero1);
-        singleLinkedList.addByOrder(hero4);
-        singleLinkedList.addByOrder(hero2);
-        singleLinkedList.addByOrder(hero3);
+//        singleLinkedList.addByOrder(hero1);
+//        singleLinkedList.addByOrder(hero4);
+//        singleLinkedList.addByOrder(hero2);
+//        singleLinkedList.addByOrder(hero3);
         singleLinkedList.list();
+        System.out.println();
 
         //测试修改节点的代码
 //        HeroNode newHeroNode = new HeroNode(2, "小卢", "玉麒麟~~");
@@ -37,11 +38,31 @@ public class SingleLinkedListDemo {
 //        System.out.println("修改后的链表情况~~");
 
         //删除一个节点
-        singleLinkedList.del(1);
-        singleLinkedList.del(4);
-        System.out.println("删除后的链表情况~~");
-        singleLinkedList.list();
+//        singleLinkedList.del(1);
+//        singleLinkedList.del(4);
+//        System.out.println("删除后的链表情况~~");
+//        singleLinkedList.list();
 
+        //测试一下看看是否得到了倒数第K个节点
+        HeroNode res = findLastIndexNode(singleLinkedList,3);
+        System.out.println("res=" + res);
+
+    }
+
+    /**
+     * 新浪面试题：查找单链表中的倒数第 k 个结点
+     * @param singleLinkedList 单链表
+     * @param k 表示是倒数第 index 个节点
+     * @return
+     */
+    public static HeroNode findLastIndexNode(SingleLinkedList singleLinkedList, int k){
+        //1. 获取链表的总长度
+        int size = singleLinkedList.getLength();
+
+        //2，倒数第 k 个节点 = 第 size - k + 1 个节点
+        int index = size - k + 1;
+        HeroNode node = singleLinkedList.indexOf(index);
+        return node;
     }
 }
 
