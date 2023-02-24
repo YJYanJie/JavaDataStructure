@@ -1,11 +1,4 @@
-package com.yj.linear.table.ordertable;
-
-import com.sun.org.apache.xpath.internal.operations.Or;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+package DataStructures.t0_ordertable;
 
 /**
  * 顺序表的泛型实现

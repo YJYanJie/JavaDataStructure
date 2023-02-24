@@ -1,4 +1,4 @@
-package com.yj.linear.table.ordertable;
+package DataStructures.t0_ordertable;
 
 /**
  * 顺序表的实现

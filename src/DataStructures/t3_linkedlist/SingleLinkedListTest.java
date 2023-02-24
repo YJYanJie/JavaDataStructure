@@ -1,4 +1,4 @@
-package com.yj.linear.table.linkedlist;
+package DataStructures.t3_linkedlist;
 
 /**
  * @author YJ

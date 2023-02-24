@@ -1,6 +1,4 @@
-package com.yj.linear.table.ordertable;
-
-import java.util.ArrayList;
+package DataStructures.t0_ordertable;
 
 /**
  * 顺序表的测试

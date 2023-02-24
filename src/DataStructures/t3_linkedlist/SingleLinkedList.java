@@ -1,4 +1,4 @@
-package com.yj.linear.table.linkedlist;
+package DataStructures.t3_linkedlist;
 
 /**
  * 单链表带头结点的非循环实现
