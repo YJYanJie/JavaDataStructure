@@ -5,12 +5,12 @@ package DataStructures.t3_linkedlist;
  * @author YJ
  * @create 2022-12-05 12:32
  */
-public class SingleLinkedList<E> {
+public class MSingleLinkedList<E> {
 
     private Node head; //头结点
     private int size; //单链表的表长
 
-    public SingleLinkedList(){
+    public MSingleLinkedList(){
         this.head = new Node(); //初始化时，创建一个头结点，没有数据，头节点不动，不存放具体的数据
     }
 

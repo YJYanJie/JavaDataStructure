@@ -6,7 +6,7 @@ package DataStructures.t3_linkedlist;
  */
 public class SingleLinkedListTest {
     public static void main(String[] args) {
-        SingleLinkedList linkedList = new SingleLinkedList();
+        MSingleLinkedList linkedList = new MSingleLinkedList();
 
         linkedList.addLast(4);
 
