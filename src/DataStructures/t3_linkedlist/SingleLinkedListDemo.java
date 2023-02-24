@@ -60,7 +60,7 @@ public class SingleLinkedListDemo {
         int size = singleLinkedList.getLength();
 
         //2，倒数第 k 个节点 = 第 size - k + 1 个节点
-        int index = size - k + 1;
+        int index = size - k;
         HeroNode node = singleLinkedList.indexOf(index);
         return node;
     }
@@ -258,7 +258,7 @@ class SingleLinkedList {
 
         //从首元节点开始遍历
         HeroNode cur = head.next;
-        int count = 1;
+        int count = 0;
 
         while (cur != null && count < index){
             count++;
