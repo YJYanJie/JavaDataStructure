@@ -1,5 +1,7 @@
 package DataStructures.t3_linkedlist;
 
+import java.util.Stack;
+
 /**
  * Description:
  *
@@ -38,6 +40,9 @@ public class SingleLinkedListDemo {
         reverseList(singleLinkedList.getHead());
 		singleLinkedList.list();
 
+//        System.out.println("测试逆序打印单链表, 没有改变链表的结构~~");
+//        reversePrint(singleLinkedList.getHead());
+
         //测试修改节点的代码
 //        HeroNode newHeroNode = new HeroNode(2, "小卢", "玉麒麟~~");
 //        singleLinkedList.update(newHeroNode);
@@ -59,7 +64,7 @@ public class SingleLinkedListDemo {
      * 新浪面试题：查找单链表中的倒数第 k 个结点
      * @param singleLinkedList 单链表
      * @param k 表示是倒数第 index 个节点
-     * @return
+     * @return node
      */
     public static HeroNode findLastIndexNode(SingleLinkedList singleLinkedList, int k){
         //1. 获取链表的总长度
@@ -67,14 +72,13 @@ public class SingleLinkedListDemo {
 
         //2，倒数第 k 个节点 = 第 size - k + 1 个节点
         int index = size - k;
-        HeroNode node = singleLinkedList.indexOf(index);
-        return node;
+        return singleLinkedList.indexOf(index);
     }
 
     /**
-     * 腾讯面试题：单链表的翻转
+     * 腾讯面试题：单链表的反转
      *
-     * @param head
+     * @param head 头节点
      */
     public static void reverseList(HeroNode head){
         //链表为空或者只有一个节点，则不需要处理
@@ -85,7 +89,7 @@ public class SingleLinkedListDemo {
         //创建新节点
         HeroNode reverseHead = new HeroNode(0, "", "");
         HeroNode cur = head.next;
-        HeroNode next = null; //当前节点的下一个节点
+        HeroNode next; //当前节点的下一个节点
         //遍历原链表，每遍历一个节点，将其取出，并放在新链表的最前端
         while (cur != null){
             next = cur.next; //保存当前节点的下一个节点
@@ -99,12 +103,38 @@ public class SingleLinkedListDemo {
         //遍历完链表后，将原链表的头节点，指向反转后的链表
         head.next = reverseHead.next;
     }
+
+    /**
+     * 百度面试题：逆序输出单链表
+     *      1. 反转单链表，再次输出   ->  会破坏原有链表的结构
+     *      2. 利用栈结构，将各个节点压入栈中，然后利用栈的先进后出的特点，实现逆序打印的效果
+     * @param head 头节点
+     */
+    public static void reversePrint(HeroNode head){
+        //链表为空
+        if (head.next == null){
+            return;
+        }
+        //创建一个栈，将链表的各个节点压入栈中
+        Stack<HeroNode> stack = new Stack<>();
+        HeroNode cur = head.next;
+        //将链表的所有节点压入栈
+        while (cur != null){
+            stack.add(cur);
+            cur = cur.next;
+        }
+
+        //遍历栈，并输出
+        while (stack.size() > 0){
+            System.out.println(stack.pop()); //栈的特点：先进后出
+        }
+    }
 }
 
 //定义单链表 SingleLinkedList 管理节点
 class SingleLinkedList {
     //初始化一个头节点,头节点不要动，不存放具体的数据
-    private HeroNode head = new HeroNode(0, "", "");
+    private final HeroNode head = new HeroNode(0, "", "");
 
     //返回头节点
     public HeroNode getHead() {
@@ -117,7 +147,7 @@ class SingleLinkedList {
      * 1. 找到当前节点的最后节点
      * 2. 将最后这个节点的next 指向 新的节点
      *
-     * @param head
+     * @param head 头节点
      */
     public void add(HeroNode head) {
         // 因为 head 节点不能动，需要一个辅助变量 temp
@@ -129,7 +159,7 @@ class SingleLinkedList {
     /**
      * 第二种方式在添加英雄时，根据排名将英雄插入到指定位置
      * (如果有这个排名，则添加失败，并给出提示)
-     * @param heroNode
+     * @param heroNode 需要添加的节点
      */
     public void addByOrder(HeroNode heroNode){
         //头节点不能动，需要辅助变量，找到需要添加的位置的前一个节点，否则无法插入
@@ -165,7 +195,7 @@ class SingleLinkedList {
     /**
      * 修改节点的信息，根据no编号修改，即no编号不能改
      *      说明： 根据 newHeroNode 的 no 来修改即可
-     * @param newHeroNode
+     * @param newHeroNode 需要修改的节点
      */
     public void update(HeroNode newHeroNode){
         //判断链表是否为空
@@ -202,7 +232,7 @@ class SingleLinkedList {
 
     /**
      * 根据 no 删除节点
-     * @param no
+     * @param no 编号
      */
     public void del(int no) {
         //1. 找到需要删除的节点的前一个节点
@@ -233,7 +263,7 @@ class SingleLinkedList {
     /**
      * 找到单链表的尾节点
      *
-     * @return
+     * @return 返回链表的尾节点
      */
     private HeroNode getLast() {
         HeroNode temp = head;
@@ -253,11 +283,7 @@ class SingleLinkedList {
 
         //因为头节点，不能动，因此我们需要一个辅助变量来遍历
         HeroNode temp = head.next;
-        while (true) {
-            //判断链表是否遍历结束
-            if (temp == null) {
-                break;
-            }
+        while (temp != null) {
             //输出节点的信息
             System.out.println(temp);
             //temp后移
