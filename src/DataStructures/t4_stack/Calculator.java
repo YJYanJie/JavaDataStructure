@@ -22,7 +22,7 @@ public class Calculator {
          *  5. 当表达式扫描完毕，就顺序的从数栈和符号栈中 pop 出相应的数和符号，并进行计算
          *  6. 最后在数栈只有一个数字，就是表达式的结果
          */
-        String expression = "7*2*2-5+1-5+3-4";
+        String expression = "71*2*2-5+1-5+3-4";
 
         //1. 定义两个栈，符号栈 operStack；数栈 numStack
         ArrayStack2 operStack = new ArrayStack2(10);
@@ -104,8 +104,8 @@ public class Calculator {
 
 //创建 ArrayStack2 表示栈
 class ArrayStack2 {
-    private int maxSize; //栈的大小
-    private int[] stack; //数组，模拟栈
+    private final int maxSize; //栈的大小
+    private final int[] stack; //数组，模拟栈
     private int top = -1; //栈顶，初始化为 -1
 
     //构造器
