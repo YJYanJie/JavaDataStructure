@@ -126,6 +126,7 @@ class DoubleLinkedList {
         if (flag){
             //2.找到后进行删除操作
             cur.pre.next = cur.next;
+            //如果是最后一个节点，就不需要执行下面这句话，否则会出现空指针异常
             if (cur.next != null) {
                 cur.next.pre = cur.pre;
             }
