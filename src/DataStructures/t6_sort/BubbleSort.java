@@ -1,12 +1,10 @@
 package DataStructures.t6_sort;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
 /**
  * Description: 冒泡排序
- *
+ *      1. 一共进行数组的大小 - 1次循环
+ *      2. 每一趟排序的次数在逐渐的减少
+ *      3. 如果发现在某躺排序中，没有发生一次交换，可以提前结束冒泡排序（优化）
  * @author YJ
  * @version 1.0
  * @date 2023/3/3 18:32
@@ -27,6 +25,12 @@ public class BubbleSort {
 //        System.out.println("排序前");
 //        System.out.println(Arrays.toString(arr));
 
+        //输出时间
+//
+//        Date date1 = new Date();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String date1Str = simpleDateFormat.format(date1);
+//        System.out.println("排序前的时间为：" + date1Str);
         long start1 = System.currentTimeMillis();
         //测试冒泡排序
         bubbleSort(arr);
