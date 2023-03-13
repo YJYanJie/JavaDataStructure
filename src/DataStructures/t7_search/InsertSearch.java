@@ -1,7 +1,7 @@
 package DataStructures.t7_search;
 
 /**
- * Description: 插值查找
+ * Description: 插值查找: 适用于 数据量较大，且关键字分布比较均匀
  *
  * @author YJ
  * @version 1.0
