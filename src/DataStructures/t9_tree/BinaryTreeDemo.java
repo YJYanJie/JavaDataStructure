@@ -26,14 +26,14 @@ public class BinaryTreeDemo {
         binaryTree.setRoot(root);
 
         //测试
-        System.out.println("前序遍历");
-        binaryTree.preOrder(); // 1 2 3 4       1 2 3 5 4
-
-        System.out.println("中序遍历");
-        binaryTree.infixOrder(); // 2 1 3 4     2 1 5 3 4
-
-        System.out.println("后序遍历");
-        binaryTree.postOrder(); // 2 4 3 1      2 5 4 3 1
+//        System.out.println("前序遍历");
+//        binaryTree.preOrder(); // 1 2 3 4       1 2 3 5 4
+//
+//        System.out.println("中序遍历");
+//        binaryTree.infixOrder(); // 2 1 3 4     2 1 5 3 4
+//
+//        System.out.println("后序遍历");
+//        binaryTree.postOrder(); // 2 4 3 1      2 5 4 3 1
 
         //前序遍历查找：进行 4 次比较
 //        System.out.println("前序遍历查找");
@@ -54,13 +54,21 @@ public class BinaryTreeDemo {
 //        }
 
         //后序遍历查找：进行 2 次比较
-        System.out.println("后序遍历查找");
-        HeroNode res = binaryTree.postOrderSearch(5);
-        if (res != null){
-            System.out.printf("找到了，信息为 no=%d  name=%s", res.getNo(), res.getName());
-        }else {
-            System.out.printf("没有找到 no=%d 的人", 5);
-        }
+//        System.out.println("后序遍历查找");
+//        HeroNode res = binaryTree.postOrderSearch(5);
+//        if (res != null){
+//            System.out.printf("找到了，信息为 no=%d  name=%s", res.getNo(), res.getName());
+//        }else {
+//            System.out.printf("没有找到 no=%d 的人", 5);
+//        }
+
+        //删除结点
+        System.out.println("删除前,前序遍历");
+        binaryTree.preOrder(); // 1,2,3,5,4
+//        binaryTree.delNode(5);
+        binaryTree.delNode(3);
+        System.out.println("删除后，前序遍历");
+        binaryTree.preOrder(); // 1,2,3,4
     }
 }
 
@@ -123,6 +131,21 @@ class BinaryTree{
             return root.postOrderSearch(no);
         }else {
             return null;
+        }
+    }
+
+    //二叉树的删除结点操作
+    public void delNode(int no){
+        if (root != null){
+            //如果只有 root 一个结点，就需要立即判断 root 是不是就是要删除的结点
+            if (root.getNo() == no){
+                root = null;
+            }else {
+                //递归删除
+                root.delNode(no);
+            }
+        }else {
+            System.out.println("空树，无法删除");
         }
     }
 }
@@ -292,5 +315,41 @@ class HeroNode{
             return this;
         }
         return res;
+    }
+
+    /*
+     * 二叉树删除结点：
+     * 1. 如果删除的结点是叶子结点，则删除该结点
+     * 2. 如果删除的结点是非叶子结点，则删除该子树
+     *
+     * 1. 因为二叉树是单向的，所以需要判断当前结点的子结点是否是删除结点，而不能去判断当前这个结点是不是需要删除结点
+     * 2. 如果当前结点的左子结点不为空，且左子结点就是要删除结点，就将 this.left = null，并且返回(结束递归删除)
+     * 3. 如果当前结点的右子结点不为空，且右子结点就是要删除结点，就将 this.right = null，并且返回(结束递归删除)
+     * 4. 如果第 2 步和第 3 步没有找到删除结点，就向左子树进行递归删除
+     * 5. 如果第 4 步也没有删除结点，就向右子树进行递归删除
+     * 6. 如果树是空树，如果只有一个 root 结点，则等价于将二叉树置空
+     */
+    public void delNode(int no){
+        //2. 如果当前结点的左子结点不为空，且左子结点就是要删除结点，就将 this.left = null，并且返回(结束递归删除)
+        if (this.left != null && this.left.no == no){
+            this.left = null;
+            return;
+        }
+
+        //3. 如果当前结点的右子结点不为空，且右子结点就是要删除结点，就将 this.right = null，并且返回(结束递归删除)
+        if (this.right != null && this.right.no == no){
+            this.right = null;
+            return;
+        }
+
+        //4. 对左子树进行递归删除
+        if (this.left != null){
+            this.left.delNode(no);
+        }
+
+        //5. 对右子树进行递归删除
+        if (this.right != null){
+            this.right.delNode(no);
+        }
     }
 }
