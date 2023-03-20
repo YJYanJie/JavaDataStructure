@@ -1,9 +1,6 @@
 package DataStructures.t10_huffmancode;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -17,11 +14,17 @@ public class HuffmanCode {
     public static void main(String[] args) {
 
         //测试压缩文件
-        String srcFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\src.bmp";
-        String dstFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\dst.zip";
+//        String srcFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\src.bmp";
+//        String dstFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\dst.zip";
 
-        zipFile(srcFile, dstFile);
-        System.out.println("压缩文件ok~~~");
+//        zipFile(srcFile, dstFile); //压缩方法
+//        System.out.println("压缩文件ok~~~");
+
+        //测试解压文件
+        String zipFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\dst.zip";
+        String dstFile = "E:\\develop\\workspaces\\IDEAWorkspaces\\JavaDataStructure\\src\\DataStructures\\t10_huffmancode\\src2.bmp";
+        unZipFile(zipFile, dstFile);
+        System.out.println("解压成功ok~~~");
 
         /*
         String content = "i like like like java do you like a java";
@@ -55,6 +58,52 @@ public class HuffmanCode {
 //        byte[] huffmanCodeBytes = zip(contentBytes, huffmanCodes);
 
     }
+
+
+    //对压缩文件进行解压
+
+    /**
+     *
+     * @param zipFile 准备解压的文件
+     * @param dstFile 将解压文件解压到哪个路径
+     */
+    public static void unZipFile(String zipFile, String dstFile){
+        //创建文件输入流
+        InputStream is = null;
+        ObjectInputStream ois = null; // 对象输入流
+        //创建文件输出流
+        OutputStream os = null;
+        try{
+            //创建文件输入流
+            is = new FileInputStream(zipFile);
+            //创建一个和 is 关联的对象输入流
+            ois = new ObjectInputStream(is);
+            //读取 byte 数组
+            byte[] huffmanBytes = (byte[]) ois.readObject();
+            //读取哈夫曼编码表
+            Map<Byte, String> codes = (Map<Byte, String>) ois.readObject();
+
+            //解码
+            byte[] bytes = decode(codes, huffmanBytes);
+
+            //将 bytes 写入到目标文件
+            os = new FileOutputStream(dstFile);
+            //写数据到 dstFile 中
+            os.write(bytes);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }finally {
+            try {
+                os.close();
+                ois.close();
+                is.close();
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
     //将一个文件进行压缩
 
