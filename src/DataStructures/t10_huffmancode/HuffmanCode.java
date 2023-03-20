@@ -28,7 +28,59 @@ public class HuffmanCode {
         getCodes(huffmanTree);
         System.out.println("生成哈夫曼编码表：" + huffmanCodes);
 
+        byte[] huffmanCodeBytes = zip(contentBytes, huffmanCodes);
+        System.out.println("huffmanCodeBytes = " + Arrays.toString(huffmanCodeBytes));
+
     }
+
+    //方法：将字符串对应的 byte[] 数组，通过生成的哈夫曼编码表，返回一个哈夫曼编码压缩后的 byte[]
+
+    /**
+     *
+     * @param bytes 原始字符串对应的 byte[]
+     * @param huffmanCodes 生成的哈夫曼编码 map
+     * @return 返回哈夫曼编码处理后的 byte[]
+     * 举例：String content = "i like like like java do you like a java";  byte[] contentBytes = content.getBytes();
+     * 返回的是 "10101000101111111100100010111111110010001011111111001001010011011100011100000110111010001111001010
+     * 00101111111100110001001010011011100"     对应的 byte[] huffmanCodeBytes, 即 8 位对应一个 byte，放入到 huffmanCodeBytes
+     * huffmanCodeBytes[0] = 10101000(补码) => byte [推导 反码(补码的符号位不变 - 1) -> 原码(反码的符号位不变，其他位取反)] -> -88
+     */
+    private static byte[] zip(byte[] bytes, Map<Byte, String> huffmanCodes){
+        //1. 利用 huffmanCodes 将 bytes 转成 哈夫曼编码对应的字符串
+        StringBuilder sb = new StringBuilder();
+        //遍历 bytes 数组
+        for (byte b : bytes){
+            sb.append(huffmanCodes.get(b));
+        }
+//        System.out.println("sb = " + sb.toString());
+
+        //2. 将得到的字符串转成 byte[] 数组
+        //统计返回 byte[] huffmanCodeBytes 的长度
+        // int len = (sb.length() + 7) / 8;
+        int len;
+        if (sb.length() % 8 == 0){
+            len = sb.length() / 8;
+        }else {
+            len = sb.length() / 8 + 1;
+        }
+        //创建 存储压缩后的 byte 数组
+        byte[] huffmanCodeBytes = new byte[len];
+        int index = 0; //记录第几个 byte
+        for (int i = 0; i < sb.length(); i += 8){ //因为是每 8 位对应一个 byte，步长 + 8
+            String strByte;
+            if (i + 8 > sb.length()){ //不够 8 位
+                strByte = sb.substring(i);
+            }else {
+                strByte = sb.substring(i, i + 8);
+            }
+            //将 strByte 转成一个 byte，放入 huffmanCodeBytes 数组
+            huffmanCodeBytes[index] = (byte) Integer.parseInt(strByte, 2);
+            index++;
+        }
+
+        return huffmanCodeBytes;
+    }
+
 
     //生成哈夫曼树对应的哈夫曼编码
     //思路：
