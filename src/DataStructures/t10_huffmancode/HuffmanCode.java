@@ -13,28 +13,50 @@ public class HuffmanCode {
     public static void main(String[] args) {
         String content = "i like like like java do you like a java";
         byte[] contentBytes = content.getBytes();
-        System.out.println(contentBytes.length); //40
 
-        List<Node> nodes = getNodes(contentBytes);
-        System.out.println("nodes = " + nodes);
-
-
-        System.out.println("哈夫曼树");
-        Node huffmanTree = createHuffmanTree(nodes);
-//        System.out.println("前序遍历");
-//        preOrder(huffmanTree);
-
-        //是否生成了对应的哈夫曼编码
-        getCodes(huffmanTree);
-        System.out.println("生成哈夫曼编码表：" + huffmanCodes);
-
-        byte[] huffmanCodeBytes = zip(contentBytes, huffmanCodes);
+        byte[] huffmanCodeBytes = huffmanZip(contentBytes);
         System.out.println("huffmanCodeBytes = " + Arrays.toString(huffmanCodeBytes));
+
+//        System.out.println(contentBytes.length); //40
+//
+//        List<Node> nodes = getNodes(contentBytes);
+//        System.out.println("nodes = " + nodes);
+//
+//
+//        System.out.println("哈夫曼树");
+//        Node huffmanTree = createHuffmanTree(nodes);
+////        System.out.println("前序遍历");
+////        preOrder(huffmanTree);
+//
+//        //是否生成了对应的哈夫曼编码
+//        getCodes(huffmanTree);
+//        System.out.println("生成哈夫曼编码表：" + huffmanCodes);
+//
+//        byte[] huffmanCodeBytes = zip(contentBytes, huffmanCodes);
 
     }
 
-    //方法：将字符串对应的 byte[] 数组，通过生成的哈夫曼编码表，返回一个哈夫曼编码压缩后的 byte[]
+    //使用一个方法，将前面的方法封装起来，便于调用
+    /**
+     *
+     * @param bytes 原始的字符串对应的字节数组
+     * @return 经过哈夫曼编码处理后的字节数组(压缩后的数组)
+     */
+    private static byte[] huffmanZip(byte[] bytes){
+        //1. 将 bytes 转成 List
+        List<Node> nodes = getNodes(bytes);
+        //2. 根据 nodes，创建哈夫曼树
+        Node huffmanTree = createHuffmanTree(nodes);
+        //3. 根据哈夫曼树得到哈夫曼编码
+        Map<Byte, String> huffmanCodes = getCodes(huffmanTree);
+        //4. 经过哈夫曼编码处理后的字节数组
+        byte[] huffmanCodeBytes = zip(bytes, huffmanCodes);
 
+        return huffmanCodeBytes;
+    }
+
+
+    //方法：将字符串对应的 byte[] 数组，通过生成的哈夫曼编码表，返回一个哈夫曼编码压缩后的 byte[]
     /**
      *
      * @param bytes 原始字符串对应的 byte[]
