@@ -15,7 +15,8 @@ public class HuffmanCode {
         byte[] contentBytes = content.getBytes();
 
         byte[] huffmanCodeBytes = huffmanZip(contentBytes);
-        System.out.println("huffmanCodeBytes = " + Arrays.toString(huffmanCodeBytes));
+        System.out.println("压缩后的结果：" +  Arrays.toString(huffmanCodeBytes));
+        System.out.println("长度 = " + huffmanCodeBytes.length);
 
 //        System.out.println(contentBytes.length); //40
 //
